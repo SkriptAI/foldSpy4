@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IP-Log und Weiterleitung</title>
+  <script>
+    // Diese Funktion wird beim Laden der Seite ausgeführt
+    async function logAndRedirect() {
+      try {
+        // Hole die Besucher-IP von einem externen Dienst
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        const ip = data.ip;
+
+        // Bereite die Log-Daten vor
+        const logData = {
+          ip: ip,
+          timestamp: new Date().toISOString(),
+          referer: document.referrer || 'Direkter Besuch',
+          page: window.location.href
+        };
+
+        // Sende die Log-Daten an deinen Logging-Endpunkt
+        // Ersetze 'https://dein-logging-endpunkt.example.com/log' mit deiner tatsächlichen URL
+        await fetch('https://dein-logging-endpunkt.example.com/log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(logData)
+        });
+      } catch (error) {
+        console.error('Logging fehlgeschlagen:', error);
+      } finally {
+        // Weiterleitung zur Zielseite, egal ob das Logging erfolgreich war oder nicht
+        // Ersetze 'https://zielseite.example.com' mit der gewünschten Ziel-URL
+        window.location.href = 'https://www.tiktok.com/@yunus.woistdasgold/photo/7503282224238710038';
+      }
+    }
+
+    // Rufe die Funktion auf, sobald das Dokument geladen ist
+    window.addEventListener('load', logAndRedirect);
+  </script>
+</head>
+<body>
+  <p>Bitte warten, Sie werden weitergeleitet...</p>
+</body>
+</html>
